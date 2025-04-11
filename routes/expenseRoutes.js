@@ -1,7 +1,7 @@
 // Add these imports if not already present
 const express = require('express');
 const router = express.Router();
-const { addExpense, getExpenses, updateExpense, deleteExpense, getExpensesByMonth, filterExpensesByMonth, searchByNote, filterExpenses } = require('../controllers/expenseController');
+const { addExpense, getExpenses, updateExpense, deleteExpense, getExpensesByMonth, filterExpensesByMonth, searchByNote, filterExpenses, getExpensesByTag } = require('../controllers/expenseController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 // Existing routes
@@ -21,4 +21,7 @@ router.get('/filter', authMiddleware, filterExpenses);
 router.get('/filter', authMiddleware, filterExpensesByMonth);
 // GET /api/expenses/search?note=groceries
 router.get('/search', authMiddleware, searchByNote);
+// routes/expenseRoutes.js
+router.get('/tag/:tag', authMiddleware, getExpensesByTag);
+
 

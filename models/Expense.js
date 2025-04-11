@@ -29,7 +29,11 @@ const expenseSchema = new mongoose.Schema({
   note: {
     type: String,
     default: ''
-  },  
+  }, 
+  tags: {
+    type: [String],
+    default: [],
+},
 });
 
 module.exports = mongoose.model("Expense", expenseSchema);
