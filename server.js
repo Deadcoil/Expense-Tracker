@@ -5,6 +5,8 @@ const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes');
 const expenseRoutes = require('./routes/expenseRoutes'); // Import routes
 const earningRoutes = require('./routes/earningRoutes'); 
+const summaryRoutes = require('./routes/summaryRoutes');
+
 
 dotenv.config();
 
@@ -20,6 +22,7 @@ app.use('/api/expenses', expenseRoutes);
 
 app.use('/api/earnings', earningRoutes); // ✅ Mount route
 
+app.use('/api', summaryRoutes);
 // Connect to DB and Start server
 mongoose.connect(process.env.MONGO_URI, { dbName: 'expense-tracker' })
     .then(() => {
