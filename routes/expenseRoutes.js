@@ -1,7 +1,7 @@
 // Add these imports if not already present
 const express = require('express');
 const router = express.Router();
-const { addExpense, getExpenses, updateExpense, deleteExpense } = require('../controllers/expenseController');
+const { addExpense, getExpenses, updateExpense, deleteExpense, getExpensesByMonth } = require('../controllers/expenseController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 // Existing routes
@@ -13,3 +13,7 @@ router.put('/update/:id', authMiddleware, updateExpense);
 router.delete('/delete/:id', authMiddleware, deleteExpense);
 
 module.exports = router;
+
+
+// 👇 New route
+router.get('/by-month', authMiddleware, getExpensesByMonth);

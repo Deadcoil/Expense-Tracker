@@ -80,3 +80,28 @@ exports.deleteExpense = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+exports.getExpensesByMonth = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { month, year } = req.query;
+
+    if (!month || !year) {
+      return res.status(400).json({ message: 'Month and year are required' });
+    }
+
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 0, 23, 59, 59); // Last day of month
+
+    const expenses = await Expense.find({
+      user: userId,
+      date: { $gte: startDate, $lte: endDate }
+    }).sort({ date: -1 });
+
+    res.status(200).json(expenses);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
