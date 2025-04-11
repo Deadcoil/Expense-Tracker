@@ -3,7 +3,7 @@ const Expense = require('../models/Expense');
 // Add a new expense
 exports.addExpense = async (req, res) => {
   try {
-    const { title, amount, category, description, date } = req.body;
+    const { title, amount, category, description, date, note } = req.body;
 
     const userId = req.user.id;
 
@@ -14,6 +14,7 @@ exports.addExpense = async (req, res) => {
       category,
       description,
       date,
+      note
     });
     
 
@@ -124,6 +125,23 @@ exports.filterExpensesByMonth = async (req, res) => {
     }).sort({ date: -1 });
 
     res.status(200).json(filteredExpenses);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+exports.searchByNote = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const keyword = req.query.note;
+
+    const expenses = await Expense.find({
+      user: userId,
+      note: { $regex: keyword, $options: 'i' }  // case-insensitive search
+    });
+
+    res.status(200).json(expenses);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
