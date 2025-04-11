@@ -147,3 +147,32 @@ exports.searchByNote = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+// Filter expenses by category, date range, and keyword
+exports.filterExpenses = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { category, startDate, endDate, keyword } = req.query;
+
+    const filter = { user: userId };
+
+    if (category) filter.category = category;
+    if (startDate || endDate) {
+      filter.date = {};
+      if (startDate) filter.date.$gte = new Date(startDate);
+      if (endDate) filter.date.$lte = new Date(endDate);
+    }
+    if (keyword) {
+      filter.$or = [
+        { title: { $regex: keyword, $options: 'i' } },
+        { description: { $regex: keyword, $options: 'i' } }
+      ];
+    }
+
+    const filteredExpenses = await Expense.find(filter).sort({ date: -1 });
+    res.status(200).json(filteredExpenses);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
