@@ -31,6 +31,8 @@ app.use('/api/analytics', analyticsRoutes);
 
 app.use('/api/analytics', require('./routes/analytics'));
 
+app.use('/api/user', require('./routes/userRoutes'));
+
 // Connect to DB and Start server
 mongoose.connect(process.env.MONGO_URI, { dbName: 'expense-tracker' })
     .then(() => {
