@@ -3,7 +3,7 @@ const Earning = require('../models/Earning');
 // Add a new earning
 exports.addEarning = async (req, res) => {
   try {
-    const { amount, source, date } = req.body;
+    const { amount, source, date, note='' } = req.body;
     const userId = req.user.id;
 
     const newEarning = new Earning({
@@ -11,6 +11,7 @@ exports.addEarning = async (req, res) => {
       amount,
       source,
       date,
+      note
     });
 
     await newEarning.save();

@@ -18,6 +18,10 @@ const earningSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  note: {
+    type: String,
+    default: '',
+  }  
 });
 
 module.exports = mongoose.model('Earning', earningSchema);

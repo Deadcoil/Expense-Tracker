@@ -3,7 +3,7 @@ const Expense = require('../models/Expense');
 // Add a new expense
 exports.addExpense = async (req, res) => {
   try {
-    const { title, amount, category, description, date, note, tags } = req.body;
+    const { title, amount, category, description, date, note='', tags } = req.body;
 
     const userId = req.user.id;
 
