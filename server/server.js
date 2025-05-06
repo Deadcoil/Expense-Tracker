@@ -33,6 +33,11 @@ app.use('/api/analytics', require('./routes/analytics'));
 
 app.use('/api/user', require('./routes/userRoutes'));
 
+// Test route for root
+app.get('/', (req, res) => {
+    res.send('🚀 Expense Tracker API is running');
+  });
+  
 // Connect to DB and Start server
 mongoose.connect(process.env.MONGO_URI, { dbName: 'expense-tracker' })
     .then(() => {
